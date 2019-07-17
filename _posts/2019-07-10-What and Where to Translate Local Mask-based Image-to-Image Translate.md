@@ -182,7 +182,7 @@ $$
 L^{1→2}_{cls_f} = E_{x_{1→2}}[-logD_{cls}(y_{x_2}|x_{1→2})]
 $$
 
-$D_{cls}(y_{x_i}|x_j)$ : $x_i$이미지가 주어질 때, 그 이미지의 label($y_i$)를 예측하는 확률
+위 두 식의 $D_{cls}(y_{x_i}|x_j)$ : $x_i$이미지가 주어질 때, 그 이미지의 label($y_i$)를 예측하는 확률
 
 Label을 매기는 방법은 정확히 언급하지 않았으나 실험 과정에서 CelebA dataset을 사용하며 특정 10개의 attribute를 선택했다고 나와있다. 좀 더 자세한 방법은 선행연구인 [starGAN](https://arxiv.org/abs/1711.09020) 참고하면 된다. 
 
