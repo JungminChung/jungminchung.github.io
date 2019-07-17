@@ -182,7 +182,7 @@ $$
 L^{1→2}_{cls_f} = E_{x_{1→2}}[-logD_{cls}(y_{x_2}|x_{1→2})]
 $$
 
-위 두 식의 $D_{cls}(y_{x_i}|x_j)$ : $x_i$이미지가 주어질 때, 그 이미지의 label($y_i$)를 예측하는 확률
+$D_{cls}(y_{x_i}|x_j)$ : 
 
 Label을 매기는 방법은 정확히 언급하지 않았으나 실험 과정에서 CelebA dataset을 사용하며 특정 10개의 attribute를 선택했다고 나와있다. 좀 더 자세한 방법은 선행연구인 [starGAN](https://arxiv.org/abs/1711.09020) 참고하면 된다. 
 
@@ -209,6 +209,7 @@ $\hat{c}$ : 이미지의 채널(R,G,B)마다 각 채널 안에서 값들을 norm
 최종적으로 거리가 멀지 않은 구역에서 비슷한 RGB값을 갖는 pixel은 비슷한 mask value를 갖도록 강제하는 object function이다. Back propagate 과정에서는 attention network 만 update 수행했다고 한다. 
 
 * 두 번째 Regularization
+
 $$
 R_2 = E||m||_1
 $$
@@ -267,7 +268,7 @@ $$
 
 ### 5-2. CelebA dataset 
 
-![experiment1](./../images/2019-07-10/experiment_1.png){: width="800" height="300"}{: .center-image}
+![experiment1](./../images/2019-07-10/experiment_1.png){: width="850" height="300"}{: .center-image}
 
 (A) : Input 이미지 / (B) : 각 column의 결과를 내기위해 사용된 exemplar 이미지 / (C) : LOMIT / (D) : DRIT / (E) : MUNIT / (F) StarGAN
 
