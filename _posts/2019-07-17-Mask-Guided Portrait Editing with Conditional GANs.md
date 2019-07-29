@@ -27,7 +27,7 @@ Portrait editing은 Snapchat 같은 앱 및 여러 분야에서 인기가 있고
 
 보편적인 Image translation 방법은 한쪽 domain의 전반적인 스타일을 학습하고 이를 다른 domain에 입히는 방식이다. 하지만 이 논문에서는 전체적인 특성보다는 **부분적인 component들 각각의 특성을 학습하고 이를 잘 조합하는 방식**으로 portrait editing task를 수행하려 한다. 예를 들어 눈은 눈대로 잘 만들고, 입은 입대로, 얼굴 형태도 그것대로, 머리카락 역시 머리카락대로 만들고 이후에 이를 조합하는 방식으로!  
 
-![basicidea](./../images/2019-07-17/basic_idea.png){: width="300" height="150"}{: .center-image}
+![basicidea](./../images/2019-07-17/basic_idea.png){: width="400" height="150"}{: .center-image}
 
 특정 component를 embedding 하고 이를 다시 잘 재조합하는 컨셉이 image to image translation 과정에 바로 적용되기는 힘들어 보인다. (source과 target의 content가 많이 다른 과정에는 적용을 어떻게 하지??) 하지만 그만큼 조건이 만족된다면 그 task에는 강력하다고 생각된다. 
 
@@ -58,7 +58,7 @@ Portrait editing은 Snapchat 같은 앱 및 여러 분야에서 인기가 있고
 
 ### 3-1. Local Embedding Sub-Network 
 
-![localembedding](./../images/2019-07-17/localembedding.png){: width="450" height="250"}{: .center-image}
+![localembedding](./../images/2019-07-17/localembedding.png){: width="640" height="180"}{: .center-image}
 
 * 목적 : Source 이미지에서 5가지 얼굴의 요소를 뽑아내고 이를 인코딩 시킴
 * 입력 : Source 이미지($x^s$, 256x256)와 이에 해당하는 mask($m^s$, 256x256)
@@ -72,7 +72,7 @@ Portrait editing은 Snapchat 같은 앱 및 여러 분야에서 인기가 있고
 
 
 ### 3-2. Mask-Guided Generative Sub-Network
-![maskguided](./../images/2019-07-17/maskguided.png){: width="450" height="400"}{: .center-image}
+![maskguided](./../images/2019-07-17/maskguided.png){: width="640" height="180"}{: .center-image}
 
 * 목적 : Target 이미지 mask를 바탕으로 5개의 인코딩들을 잘 조합해보자 
 * 입력 : 
@@ -95,7 +95,7 @@ Portrait editing은 Snapchat 같은 앱 및 여러 분야에서 인기가 있고
     - ex) target mask 크기 : (100, 100) / 왼쪽 눈 위치 : (10,10) / 인코딩 map의 크기 : (50, 50) 이라면 (5,5)위치에 위치 시킬 수 있음.
 
 ### 3-3. Background Fusing Sub-Network
-![fusing](./../images/2019-07-17/fusing.png){: width="450" height="400"}{: .center-image}
+![fusing](./../images/2019-07-17/fusing.png){: width="640" height="150"}{: .center-image}
 
 * 목적 : 생성된 합성 얼굴 이미지에 target 이미지의 배경(target 이미지의 목도 포함하는)을 입히기 
 
