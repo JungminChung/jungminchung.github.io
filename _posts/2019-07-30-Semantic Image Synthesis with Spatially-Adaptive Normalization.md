@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Semantic Image Synthesis with Spatially-Adaptive Normalization"
-tags: [GAN, Adain, Image Synthesis, SPADE]
+tags: [GAN, Image Synthesis, SPADE, GAUGAN]
 comments: true
 disqus: true
 use_math: true
@@ -29,11 +29,11 @@ Semantic 이미지를 photorealistic 이미지로 변환하는 과정에서 입�
 
 Hidden layer 결과 feature map의 bais를 줄여 학습의 안정성을 높이는 일반적인 normalization 기법을 unconditional normalization layer라고 한다. 대표적으로 batch norm, weight norm, instance norm, group norm 등이 있고 이들에 대해 잘 정리된 [블로그](http://mlexplained.com/2018/11/30/an-overview-of-normalization-methods-in-deep-learning/)가 있어 참고하면 좋을 듯 하다. 
 
-![uncond_norm](./../images/2019-07-30/uncond_norm.png){: width="640" height="180"}{: .center-image}
+![uncond_norm](./../images/2019-07-30/uncond_norm.png){: width="600" height="180"}{: .center-image}
 
 이러한 unconditional normalization layer는 외부 데이터에 상관없이 단순히 하나의 데이터 도메인에서 적용된다. 즉, 외부 데이터에 의존적이지 않다. 하지만 <u>conditional normalizatin layer는 하나의 데이터 도메인의 특성을 다른 데이터 도메인에 입히는 것을 목적</u>으로 하며 그렇기에 외부 데이터에 의존적이다. 
 
-![cond_norm](./../images/2019-07-30/cond_norm.png){: width="640" height="180"}{: .center-image}
+![cond_norm](./../images/2019-07-30/cond_norm.png){: width="400" height="180"}{: .center-image}
 
 위 그림은 목적을 간략히 도식화한 것으로 먼저 A의 특성을 A 도메인으로부터 제외(normalize) 시키고 그 후 B 도메인의 특성(평균과 분산)을 A 도메인에 입힌다(de-normalize). Image synthesis 과정에서 주로 쓰이며 [conditional_batch_norm](https://arxiv.org/abs/1610.07629)과 [AdaIN](https://arxiv.org/abs/1703.06868)이 대표적인 예이다. 
 
@@ -42,24 +42,24 @@ Hidden layer 결과 feature map의 bais를 줄여 학습의 안정성을 높이�
  
 일반적인 conditional normalization layer 과정은 외부 데이터의 평균과 분산 값(scalar)만을 이용한다. 이미지를 두 개의 값으로 표현하는 것은 불충분하고 이 과정에서 정보의 유실이 있다. 또한 복잡한 스타일을 입히는 데는 충분하지 않다. 
 
-![latentSPADE](./../images/2019-07-30/latentSPADE.png){: width="640" height="180"}{: .center-image}
+![latentSPADE](./../images/2019-07-30/latentSPADE.png){: width="500" height="180"}{: .center-image}
 
 Latent value(z)를 이미지로 만드는 전체 과정 중 segmentation 이미지는 가이드 역할을 하도록 한다. 이때 segmentation 이미지의 정보를 (정보를 담는 데 한계가 있는) scalar의 형태가 아니라 tensor의 형태로 각 위치마다 de-normalize(affine transform)를 적용해보자!
 
 ## 4. SPatially-Adaptive DEnormalization(SPADE)
 
-![SPADE](./../images/2019-07-30/SPADE.png){: width="640" height="180"}{: .center-image}
+![SPADE](./../images/2019-07-30/SPADE.png){: width="450" height="270"}{: .center-image}
 
 - 정의 : Conditional 이미지로 제공되는 mask 이미지를 두 개의 feature map tensor($\gamma$, $\beta$)로 embedding 시킨다. 이들은 각각 해당 위치의 평균과 분산을 의미하며 main 이미지 처리 과정에 element-wise affine transform 연산이 수행된다. 
 
 - 의의 : $\gamma$와 $\beta$는 입력으로 제공되는 mask의 특정 부위에 해당해서 그 공간의 의미 있는 정보를 담고 있다. 그렇기에 정보 유실이 적다(정보를 잘 유지한다). 최종적으로 <u>segmentation 이미지의 특정 영역의 pixel에서 결과물 해당 영역 pixel로의 mapping function을 구하는 과정</u>이라고 생각할 수 있다. 
 
->  it can better preserve semantic information against common normalization layers.
+>  It can better preserve semantic information against common normalization layers.
 
 - SPADE는 다른 conditional normalization layer의 일반적인 형태라고 한다. 논문에 특정 조건 아래서 conditional batch norm 그리고 AdaIN과 같다고 한다.
 
 ## 5. Network Architecture
-![networkAll](./../images/2019-07-30/networkAll.png){: width="640" height="180"}{: .center-image}
+![networkAll](./../images/2019-07-30/networkAll.png){: width="300" height="300"}{: .center-image}
 
 * 목적 : Semantic 이미지를 photorealistic 이미지로 변환 
 * 입력 : 원본 이미지와 이 이미지의 segmentation 이미지 
@@ -72,7 +72,7 @@ Latent value(z)를 이미지로 만드는 전체 과정 중 segmentation 이미�
 
 ### 5-1. Image Encoder 
 
-![imageencoder](./../images/2019-07-30/imageencoder.png){: width="640" height="180"}{: .center-image}
+![imageencoder](./../images/2019-07-30/imageencoder.png){: width="300" height="300"}{: .center-image}
 
 * 목적 : 실제 원본 이미지를 인코딩 
 * 입력 : 실제 원본 이미지 
@@ -87,7 +87,7 @@ VAE의 학습에 사용되는 방법으로 latent space가 정규분포를 따�
 
 ### 5-2. Generator 
 
-![generator](./../images/2019-07-30/generator.png){: width="640" height="180"}{: .center-image}
+![generator](./../images/2019-07-30/generator.png){: width="300" height="300"}{: .center-image}
 
 * 목적 : 특정 분포를 따르는 임의의 vector로부터 mask 이미지를 스타일링 하는 과정 
 
@@ -103,12 +103,12 @@ VAE의 학습에 사용되는 방법으로 latent space가 정규분포를 따�
 
 #### SPADE 와 SPADE ResBlk
 
-![spadeNresblk](./../images/2019-07-30/spadeNresblk.png){: width="640" height="180"}{: .center-image}
+![spadeNresblk](./../images/2019-07-30/spadeNresblk.png){: width="600" height="300"}{: .center-image}
 
 * 역할 : 4에서 언급한 SPADE와 그를 residual block 화 한 모듈이다. 실제로 semantic 이미지에 색상을 입히는 과정으로 여러 resolution을 거쳐 <u>각 spatial region에 어떤 스타일이 입혀져야 되는지는 알려주는 mapping function을 구하는 부분</u>이다. 
 
 ### 5-3. Discriminator 
-![discri](./../images/2019-07-30/discri.png){: width="640" height="150"}{: .center-image}
+![discri](./../images/2019-07-30/discri.png){: width="300" height="300"}{: .center-image}
 
 * 목적 : 입력이 '실제 이미지와 mask 이미지'인지 '생성 이미지와 mask 이미지' 인지를 구분 
 
@@ -136,7 +136,7 @@ $D_k$는 각각 $D_1, D_2, D_3$을 나타내고 s는 segmentation 이미지, x�
 
 $$
 L_{FM}(G,D_k)=E_{(s,x)∼p_{data}(s,x)} \sum\limits_{i=1}^T
-\frac 1 N_{i} [||D_k^{(i)}(s,x) - D_k^{(i)}(s, G(s))||_1]
+\frac 1 N_{i} [││D_k^{(i)}(s,x) - D_k^{(i)}(s, G(s))││_1]
 $$
 
 FM는 feature matching의 약자로 각 $D_k$의 input인 중간 feature map 사이의 $L_1$ loss이다. 
@@ -154,10 +154,10 @@ $\lambda$는 두 loss의 비중을 조정하는 상수로 10으로 설정했다�
 우리가 원하는 것은 image encoder를 거쳐 나온 $\mu$와 $\sigma$가 각각 0과 1이 되는 것이다. 즉 이 두 값으로 reparameterization trick을 통해 sampling 한다면 normal 분포에서 sampling 한 것과 같은 효과가 있길 바르는 것이다. 이를 강제하기 위해 사용된 loss이다. pix2pixHD에서는 사용하지 않은 개념이다. 
 
 $$
-L_{KLD}=D_{KL}(q(z|x)||p(z)) 
+L_{KLD}=D_{KL}(q(z│x)││p(z)) 
 $$
 
-encoder의 결과는 $q(z|x)$이고 이는 $q(z|x)∼N(\mu,\sigma^2I)$를 만족하고 우리가 원하는 prior인 $p(z)$는 $p(z)∼N(0, I)$를 만족한다. 이렇게 prior가 간단한 normal 분포라면 위의 $L_{KLD}$는 다음의 식으로 간단화 될 수 있다. 
+encoder의 결과는 $q(z│x)$이고 이는 $q(z│x)∼N(\mu,\sigma^2I)$를 만족하고 우리가 원하는 prior인 $p(z)$는 $p(z)∼N(0, I)$를 만족한다. 이렇게 prior가 간단한 normal 분포라면 위의 $L_{KLD}$는 다음의 식으로 간단화 될 수 있다. 
 
 $$
 \frac 1 2 \sum (\mu^2 + \sigma^2 - ln(\sigma^2) - 1)
@@ -212,19 +212,19 @@ Frechet Inception Distance(FID)
 
 #### Quantitative comparison 
 
-![quantitative](./../images/2019-07-30/quantitative.png){: width="640" height="150"}{: .center-image}
+![quantitative](./../images/2019-07-30/quantitative.png){: width="600" height="100"}{: .center-image}
 
 대부분의 경우 SPADE가 좋은 성능(bold)를 보인다. SIMS는 외부 데이터가 필요하다 그로 인해 장점과 단점(?)이 존재한다. 장점으로는 외부 데이터에 다양하고 양질의 도시 풍경 이미지를 갖고 있어 매우 그럴듯한 이미지를 더 잘 만들어 낼 수 있다. 따라서 더 좋은 FID score를 보인다. 하지만 단점으로는 외부 데이터가 존재하지 않는 COCO-stuff와 ADE20k에는 적용할 수 없다. 따라서 N/A로 표시해 두었다. 
 
 #### Qualitative comparison 
 
-![qualitative](./../images/2019-07-30/qualitative.png){: width="640" height="150"}{: .center-image}
+![qualitative](./../images/2019-07-30/qualitative.png){: width="400" height="110"}{: .center-image}
 
 Amazon Mechanical Turk를 이용했다. 사용자는 segmentation 이미지와 이를 이용해 생성한 이미지 두 개를 받는다. 각각 SPADE를 이용한 결과물과 baseline model을 이용해 만든 이미지이다. "해당 segmentation 이미지와 더 잘 부합 (corresponding)하는 이미지를 고른다. 각 데이터 셋마다 500번의 질의가 있었고 모든 경우 baseline 모델보다 좋은 평가를 받았다. 수치는 SPADE 이미지가 더 좋다고 말한 비율이다. 
 
 ### 7-2. Effectiveness of SPADE
 
-![effectiveness](./../images/2019-07-30/effectiveness.png){: width="640" height="150"}{: .center-image}
+![effectiveness](./../images/2019-07-30/effectiveness.png){: width="400" height="150"}{: .center-image}
 
 - compact : Depth를 줄인 모델 
 
@@ -240,7 +240,7 @@ mIoU score가 좋다는 것은 그만큼 segmentation의 의미를 잘 유지한
 
 ### 7-3. Multi-modal synthesis 
 
-![multimodal](./../images/2019-07-30/multimodal.png){: width="640" height="150"}{: .center-image}
+![multimodal](./../images/2019-07-30/multimodal.png){: width="640" height="500"}{: .center-image}
 
 KL divergence로 encoding value들이 normal 분포를 갖는다면 inference 과정에서 normal 분포를 따르는 다른 sampling value로 multi modal synthesis이 가능하다. 
 
