@@ -39,13 +39,13 @@ Texture는 물론이고 shape도 적절히 잘(유지할 부분은 유지하고,
 
 최종 목적이 classification이라면 목적 달성을 위해 상대적으로 더 중요한 feature map과 덜 중요한 것이 나눠질 것이다. 이렇게 각 feature map의 중요도를 이용해 원래 이미지와 겹쳐 보면(resizing 과정 필요) 어떤 부분에 의해 classify를 했는지 아래처럼 시각화할 수 있다. 
 
-![CAM](./../images/2019-08-12/CAM.png){: width="450" height="270"}{: .center-image}
+![CAM](./../images/2019-08-12/CAM.png){: width="450" height="300"}{: .center-image}
 
 그림에서 각 class에 따라 중요한 부위가 붉게 표시됨을 볼 수 있다. 
 
 ### 2-2. AdaLIN 
 
-![norm](./../images/2019-08-12/norm.png){: width="450" height="270"}{: .center-image}
+![norm](./../images/2019-08-12/norm.png){: width="700" height="180"}{: .center-image}
 
 Instance norm은 spatial 정보(H,W)만을 통으로 normalize 시킨다. 또한 각 feature channel 간의 uncorrelation을 가정하므로 source domain의 shape은 유지하지만 target domain의 (세부적) style 전파에는 약하다(전체 하나의 대표적 스타일 하나만 뽑아낸다). 
 
@@ -68,7 +68,7 @@ Instance norm은 spatial 정보(H,W)만을 통으로 normalize 시킨다. 또한
 
 ### 3-1. Generator 
 
-![generator](./../images/2019-08-12/generator.png){: width="300" height="300"}{: .center-image}
+![generator](./../images/2019-08-12/generator.png){: width="600" height="360"}{: .center-image}
 
 * 목적 : $T$ 도메인으로 바뀐 이미지 
 * 입력 : $S$와 $T$ 도메인의 이미지들 
@@ -82,7 +82,7 @@ Instance norm은 spatial 정보(H,W)만을 통으로 normalize 시킨다. 또한
     - 전형적인 auto encoder 구조
     - Auxiliary ~ Decoder 과정 
     
-    ![auxiNdeco](./../images/2019-08-12/auxiNdeco.png){: width="300" height="300"}{: .center-image}
+    ![auxiNdeco](./../images/2019-08-12/auxiNdeco.png){: width="600" height="260"}{: .center-image}
 
     auxiliary 과정이 끝나면 **feature map 들에 중요도(weight)가 가중되어 중요한/덜 중요한/안 중요한 feature map**이 생성된다. 이는 입력으로 들어오는 이미지의 도메인에 종속적이며 이미지의 특정 region이 어떤지에도 종속적이다. 이후 AdaLIN이 적용되면 가중된 **각 feature map을 어느 비율로 IN과 LN을 섞을지 결정**하는 단계로 넘어가게 된다. 즉, 각 map의 정보를 어느 정도 살릴지/날릴지를 결정하는 단계이다. 
     
@@ -128,7 +128,7 @@ $$
 
 ### 3-2. Discriminator 
 
-![discriminator](./../images/2019-08-12/discriminator.png){: width="300" height="300"}{: .center-image}
+![discriminator](./../images/2019-08-12/discriminator.png){: width="580" height="360"}{: .center-image}
 
 * 목적 : 실제 $T$ 도메인 이미지인지 생성된 이미지 인지를 구분 
 * 입력 : $T$ 도메인의 이미지들과 $S$ 도메인 이미지를 이용해 생성한($S→T$) 이미지
@@ -229,25 +229,25 @@ $$
 
 #### CAM의 유효성 
 
-![exp_cam](./../images/2019-08-12/exp_cam.png){: width="300" height="300"}{: .center-image}
+![exp_cam](./../images/2019-08-12/exp_cam.png){: width="530" height="480"}{: .center-image}
 
 (b)는 generator의 CAM (c)는 discriminator의 local CAM, (d)는 global CAM이다. (b)의 경우 source 이미지와 target 이미지 사이의 차이가 나는 부분(눈, 입)이 잘 표시된다고 한다(지만 그 외의 부분도 activate된 듯한 느낌이 든다...). 그리고 (c)와 (d)의 경우 눈에 띄는 차이가 보였고 넓게 봤을때 주의해야 하는 부분과 좁게 봤을때 집중해서 바꿔야 하는 부분을 찾았다는 점은 납득이 되었다. (d)는 CAM을 사용한 경우의 (e)는 CAM을 쓰지 않은 경우의 생성 이미지이다. 개인적으로 generator와 discriminator 각각의 CAM 유무에 따른 결과도 궁금하다.  
 
 아래 이미지는 다른 데이터 셋을 활용한 generator에서의 CAM 이미지이다. 개 vs 고양이의 경우는 눈과 코에 activate가 주로 되었다. 의미가 와닿는 경우다. 하지만 photo vs portrait나 풍경 사진의 activate는 일관성이 잘 안 보인다. 
 
-![exp_cam2](./../images/2019-08-12/exp_cam2.png){: width="300" height="300"}{: .center-image}
+![exp_cam2](./../images/2019-08-12/exp_cam2.png){: width="420" height="500"}{: .center-image}
 
 #### AdaLIN의 유효성 
 
-![exp_ada](./../images/2019-08-12/exp_ada.png){: width="300" height="300"}{: .center-image}
+![exp_ada](./../images/2019-08-12/exp_ada.png){: width="530" height="500"}{: .center-image}
 
 (a)와 (b)는 각각 입력 이미지와 논문의 결과 이미지이다. 다음 결과들은 각각 오직 Instance norm, Layer norm, AdaIN, Group norm을 사용한 경우이다. IN과 LN을 적절히 섞는 제안을 한 만큼 (b),(c),(d)를 눈여겨볼 필요가 있다. Basic Idea의 설명에서처럼 IN과 LN을 적절히 섞은 (b)의 경우 (c),(d)보다 그럴듯한 결과를 보여주며 (e), (f)보다 좋은 결과를 그려냈다. AdaIN과 GN의 특성도 살펴보고 이를 AdaLIN과 비교해 봐야겠다. 
 
 #### 질적 평가 
 
-![exp_qual](./../images/2019-08-12/exp_qual.png){: width="300" height="300"}{: .center-image}
+![exp_qual](./../images/2019-08-12/exp_qual.png){: width="700" height="200"}{: .center-image}
 
-![exp_qual2](./../images/2019-08-12/exp_qual2.png){: width="300" height="300"}{: .center-image}
+![exp_qual2](./../images/2019-08-12/exp_qual2.png){: width="900" height="300"}{: .center-image}
 
 질적 평가를 위해 135명의 실험자를 대상으로 user study를 진행했다. 표 아래 그림이 평가에 사용되었던 그림의 일부(좌 : $S → T$ / 우 : $T → S$ )이다. 결과적으로 대부분의 데이터 셋에서 U-GAT-IT이 압도적으로 좋은 평가를 받았다. photo2portrait에서만 UNIT이 좋은 평가를 받았는데 그 차이는 U-GAT-IT과 크지 않다. 이에 해당해서 예시 그림 좌측의 4번째 줄 결과로만 보건대, (b)와 (d)의 생성 이미지가 적합성에서 둘 다 부족해 보인다. 네트워크의 성능이라기보다는 데이터의 문제로 보는게 맞는듯싶다. 
 
@@ -255,17 +255,17 @@ $$
 
 * 평가 metric : [Kernel Inception Distance](https://arxiv.org/abs/1801.01401)(KID)를 사용했다. 이는 FID와 마찬가지로 생성 이미지와 실제 이미지를 이용해 특정 네트워크(Inception)을 통과시킨 feature map의 유사도를 측정한 방법이다. 측정에 사용되는 feature map은 ReLU를 통과한 값 들이다. 따라서 많은 값들이 0인데 이는 일반적인 연속형 확률 분포(적분이 1이라든지..)의 형태가 아니게 된다. FID는 이 분포를 parametric 방식(평균 등)으로 추정하고 거리를 측정하는데, 일반적인 분포의 형태가 아니므로 적절한 방법이 아니다. 이를 보완하기 위해 un-parametric 방식(unbaised estimator 방식)으로 거리를 측정한 방법이 KID이다(이게 수식적으로도 구하기 쉽다고 하는데 수식이 너무 많아서 pass..). 이 과정에서 장점이 한 가지 있다: FID보다 적은 수의 테스트 이미지 만으로도 측정이 가능하다고 한다. Distance이므로 값이 작은 게 좋다. 
 
-![exp_quan](./../images/2019-08-12/exp_quan.png){: width="300" height="300"}{: .center-image}
+![exp_quan](./../images/2019-08-12/exp_quan.png){: width="700" height="300"}{: .center-image}
 
 총 5가지의 데이터 셋 중 3가지 경우 U-GAT-IT이 좋은 성능을 보였다. 다른 두 경우인 photo2portrain와 photo2vangogh($S$와 $T$의 반대 경우도)는 원래 stlye transfer task고 그래서 성능이 조금 떨어진다고 한다. 데이터 셋에 목적이 따로 있다고는 생각이 들지 않는다. 다만 데이터 셋의 크기가 결과에 영향을 미친 게 아닐까 생각이 든다.  
 
-![exp_quan2](./../images/2019-08-12/exp_quan2.png){: width="300" height="300"}{: .center-image}
+![exp_quan2](./../images/2019-08-12/exp_quan2.png){: width="400" height="215"}{: .center-image}
 
 CAM과 AdaLIN의 유무에 따른 KID score를 보여준다. 둘 중 하나만 있는 경우에 score가 월등히 낮거나, 높거나 하지 않는 양상을 보면 이 두 구조가 서로 상호 보완적이라는 생각이 든다. 또한 이 둘이 함께 있을 경우에 그 효과가 잘 나타난다고 생각된다. 
 
 #### 기타 평가 
 
-![exp_etc](./../images/2019-08-12/exp_etc.png){: width="300" height="300"}{: .center-image}
+![exp_etc](./../images/2019-08-12/exp_etc.png){: width="400" height="300"}{: .center-image}
 
 $\rho$값의 변화와 서로 다른 데이터 셋이라는 변인에 따라 그린 그래프이다. $\rho$값이 0에 가까우면 LN을 1에 가까우면 IN에 집중한다는 의미이다. 하지만 명확히 y 축이 의미하는 바를 모르겠다. #라고 적혀있는데 값의 range가 0~1 인 것을 보면 ratio로 봐야 하는 건지... 그리고 데이터 셋마다 다른 특징적인 모양을 보여주는 것도 아닌듯하다. 그래서 논문에서 말한 IN이 어느 경우에 더 잘하고, AdaIN의 $\rho$가 1에 가까운지 명확히 와닿지가 않는다. 
 
