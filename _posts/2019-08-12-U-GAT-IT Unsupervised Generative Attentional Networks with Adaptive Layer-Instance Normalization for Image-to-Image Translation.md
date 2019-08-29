@@ -53,9 +53,9 @@ Instance norm은 spatial 정보(H,W)만을 통으로 normalize 시킨다. 또한
 
 ## 3. U-GAT-IT Architecture 
 
-* 목적 : $S$(혹은 $T$) 도메인에서 $T$(혹은 $S$) 도메인으로 image-to-image translation
+* 목적 : $S$(혹은 $T$) 도메인에서 $T$ 도메인으로 image-to-image translation
 * 입력 : $S$(혹은 $T$) 도메인의 이미지 
-* 출력 : $T$(혹은 $S$) 도메인의 이미지, CAM feature map(=attention module)
+* 출력 : $T$ 도메인의 이미지, CAM feature map(=attention module)
 * 구성 network 
     1. Generator 
     2. Discriminator 
