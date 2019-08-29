@@ -231,7 +231,7 @@ $$
 
 ![exp_cam](./../images/2019-08-12/exp_cam.png){: width="530" height="480"}{: .center-image}
 
-(b)는 generator의 CAM (c)는 discriminator의 local CAM, (d)는 global CAM이다. (b)의 경우 source 이미지와 target 이미지 사이의 차이가 나는 부분(눈, 입)이 잘 표시된다고 한다(지만 그 외의 부분도 activate된 듯한 느낌이 든다...). 그리고 (c)와 (d)의 경우 눈에 띄는 차이가 보였고 넓게 봤을때 주의해야 하는 부분과 좁게 봤을때 집중해서 바꿔야 하는 부분을 찾았다는 점은 납득이 되었다. (d)는 CAM을 사용한 경우의 (e)는 CAM을 쓰지 않은 경우의 생성 이미지이다. 개인적으로 generator와 discriminator 각각의 CAM 유무에 따른 결과도 궁금하다.  
+(b)는 generator의 CAM (c)는 discriminator의 local CAM, (d)는 global CAM이다. (b)의 경우 source 이미지와 target 이미지 사이의 차이가 나는 부분(눈, 입)이 잘 표시된다고 한다(지만 그 외의 부분도 activate된 듯한 느낌이 든다...). 그리고 (c)와 (d)의 경우 눈에 띄는 차이가 보였고 넓게 봤을때 주의해야 하는 부분과 좁게 봤을때 집중해서 바꿔야 하는 부분을 찾았다는 점은 납득이 되었다. (e)는 CAM을 사용한 경우의 (f)는 CAM을 쓰지 않은 경우의 생성 이미지이다. 개인적으로 generator와 discriminator 각각의 CAM 유무에 따른 결과도 궁금하다.  
 
 아래 이미지는 다른 데이터 셋을 활용한 generator에서의 CAM 이미지이다. 개 vs 고양이의 경우는 눈과 코에 activate가 주로 되었다. 의미가 와닿는 경우다. 하지만 photo vs portrait나 풍경 사진의 activate는 일관성이 잘 안 보인다. 
 
