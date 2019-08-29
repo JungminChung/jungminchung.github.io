@@ -132,7 +132,7 @@ $$
 
 * 목적 : 실제 $T$ 도메인 이미지인지 생성된 이미지 인지를 구분 
 * 입력 : $T$ 도메인의 이미지들과 $S$ 도메인 이미지를 이용해 생성한($S→T$) 이미지
-* 출력 : $S→T$로 $T→T$로 바뀐 이미지 
+* 출력 : True / False logit
 * 구성 network 
     1. Encoder 
     2. Auxiliary classifier $\eta_{D_t}$
