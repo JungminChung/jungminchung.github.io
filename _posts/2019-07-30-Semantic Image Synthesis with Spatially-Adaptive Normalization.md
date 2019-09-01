@@ -132,7 +132,7 @@ $$
 = \min_G \max_{D1, D2, D3} \sum\limits_{k=1,2,3} [ E_{(s,x)∼p_{data}(s,x)}[logD_k(s,x)]+E_{s∼p_{data}(s)}[log(1-D_k(s,G(s)))]]
 $$
 
-$D_k$는 각각 $D_1, D_2, D_3$을 나타내고 s는 segmentation 이미지, x는 segmentation 이미지의 원본 이미지이다. 기본적인 GAN loss의 형태와 크게 다르지않다. 다음 loss는 다음과 같다 
+$D_k$는 각각 $D_1, D_2, D_3$을 나타내고 s는 segmentation 이미지, x는 segmentation 이미지의 원본 이미지이다. 기본적인 GAN loss의 형태와 크게 다르지않다. 다음 loss는 아래와 같다 
 
 $$
 L_{FM}(G,D_k)=E_{(s,x)∼p_{data}(s,x)} \sum\limits_{i=1}^T
