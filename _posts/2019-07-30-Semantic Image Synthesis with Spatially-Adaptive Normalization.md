@@ -7,7 +7,7 @@ disqus: true
 use_math: true
 ---
 
-버클리 대학과 NVIDIA에서 올해 3월 18일 아카이브에 새로운 normalization 기법(SPADE)을 적용한 GAUGAN(가우간이라고 읽히는데 '고갱'이라고 읽는다고 한다..ㅎ)이라는 약칭의 [논문](https://arxiv.org/abs/1903.07291)을 올렸다. 올해 초 SNS를 통해 이 [영상](https://www.youtube.com/watch?v=MXWm6w4E5q0)을 먼저 접했고 너무 뛰어난 결과로 논문을 읽게 되었다. 논문의 1저자는 한국인이고 이분은 CycleGAN 논문에도 참여한 분이다. 이번 포스트는 인공지능연구원(AIRI) 논문 세미나 시간에 발표한 내용을 바탕으로 추가적인 정리 및 보강을 기록하기 위해 작성되었고 세미나 시간에 발표한 자료는 [이곳](https://lookaside.fbsbx.com/file/20190612%28SPADEGAN%29_new.pdf?token=AWyZ4bNjK0nWWWFyFjBwPBFy7KU35fZoiQyP6aa3ddRLVLMCmCBKzS7PsW0E1WStyf57yOYTACLBk-nU5IUUXq5yPr7rO4tGw9QDIsenQi8wzGDCOLX4DazMdg8-kUMPVKxcAZn_8GsUdN4DOfMreZ6DOac0TG_08FCkUoIQ4oVMEg)에서 확인할 수 있다.
+버클리 대학과 NVIDIA에서 올해 3월 18일 아카이브에 새로운 normalization 기법(SPADE)을 적용한 GAUGAN(가우간이라고 읽히는데 '고갱'이라고 읽는다고 한다..ㅎ)이라는 약칭의 [논문](https://arxiv.org/abs/1903.07291)을 올렸다. 올해 초 SNS를 통해 이 [영상](https://www.youtube.com/watch?v=MXWm6w4E5q0)을 먼저 접했고 너무 뛰어난 결과로 논문을 읽게 되었다. 논문의 1저자는 한국인이고 이분은 CycleGAN 논문에도 참여한 분이다. 이번 포스트는 인공지능연구원(AIRI) 논문 세미나 시간에 발표한 내용을 바탕으로 추가적인 정리 및 보강을 기록하기 위해 작성되었고 세미나 시간에 발표한 자료는 [이곳](https://www.slideshare.net/jungminchung/semantic-image-synthesis-with-spatiallyadaptive-normalizationgaugan-spade)에서 확인할 수 있다.
 
 ## 1. Introduction 
 
