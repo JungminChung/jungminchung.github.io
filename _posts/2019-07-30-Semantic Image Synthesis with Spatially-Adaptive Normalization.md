@@ -147,7 +147,7 @@ $$
 \min_G((\max_{D_1, D_2, D_3} \sum\limits_{k=1,2,3}L_{GAN}(G,D_k)) + \lambda \sum\limits_{k=1,2,3} L_{FM}(G,D_k))
 $$
 
-$\lambda$는 두 loss의 비중을 조정하는 상수로 10으로 설정했다고 한다. pix2pixHD 논문은 아직 깊이있게 보질 못했다. 그래서 논문의 loss 부분과 [학회 발표 slide](https://drive.google.com/file/d/1pObGZvEgPILtRsqEP07sv8CtNuQ55xur/view)를 참고하였다. 본 논문에서는 FM loss를 Hinge Loss로 대체했다. 
+$\lambda$는 두 loss의 비중을 조정하는 상수로 10으로 설정했다고 한다. pix2pixHD 논문은 아직 깊이있게 보질 못했다. 그래서 논문의 loss 부분과 [학회 발표 slide](https://drive.google.com/file/d/1pObGZvEgPILtRsqEP07sv8CtNuQ55xur/view)를 참고하였다. 본 논문에서는 GAN loss를 Hinge Loss로 대체했다. 
 
 ### 6-1. KL Divergence Loss in Image encoder 
 
