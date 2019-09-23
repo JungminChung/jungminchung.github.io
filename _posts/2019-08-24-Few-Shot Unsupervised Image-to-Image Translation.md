@@ -27,7 +27,7 @@ Source와 destination 도메인의 데이터 수는 결과에 영향을 크게 �
 
 ## 2. Basic Idea 
 
-![basic_idea](./../images/2019-08-24/basic_idea.png){: width="600" height="360"}{: .center-image}
+![basic_idea](./../images/2019-08-24/basic_idea.png){: width="600" height="150"}{: .center-image}
 
 ### 전체 과정 
 
@@ -106,7 +106,7 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
 * 출력 : $S$사이즈의 binary classification vector
 
 
-![discriminator](./../images/2019-08-24/discriminator.png){: width="580" height="360"}{: .center-image}
+![discriminator](./../images/2019-08-24/discriminator.png){: width="350" height="280"}{: .center-image}
 
 위 그림은 논문에 나와있는 discriminator 아키텍처 체인을 그려보았다. 네트워크의 출력은 크기가 S인 vector이며 S는 source class의 총개수이다. 도메인(class)의 수가 다수이므로 이를 대응하기 위한 구조로 보인다. 마치 classification task와 같아 보여서 그런지 논문에서도 multiple adversarial classification task라고 설명한다. 각 unit은 0 혹은 1의 값을 갖는 binary value로 1은 'source class의 이미지다!' 0은 '생성 이미지다!'라는 의미를 갖는다. Discriminator를 update 하는 rule은 아래와 같이 일반적 방법을 따른다.
 
@@ -207,17 +207,17 @@ Target class가 학습에 포함할지, 포함하지 않을지에 따라 baselin
 
 아래 그림은 FUNIT을 K를 5로 설정한 FUNIT의 결과 이미지 중 animal face이다. $y_1$과 $y_2$는 target 이미지의 일부이고, K가 5이므로 저러한 이미지가 3개씩 더 있을 것이다. $x$는 content 이미지고 마지막 $\bar{x}$가 생성된 이미지이다. content 이미지의 구도를 바탕으로 $y_1$과 $y_2$의 스타일적 특성을 반영해 생성하였다. 생성된 모델임에도 디테일과 사실성이 그럴듯하다. 양적, 질적 평가를 아래 적어두었다. 
 
-![result_ani](./../images/2019-08-24/result_ani.png){: width="700" height="300"}{: .center-image}
+![result_ani](./../images/2019-08-24/result_ani.png){: width="600" height="200"}{: .center-image}
 
 #### 양적 평가 
 
-![exp_quan](./../images/2019-08-24/exp_quan.png){: width="700" height="300"}{: .center-image}
+![exp_quan](./../images/2019-08-24/exp_quan.png){: width="700" height="500"}{: .center-image}
 
 Bold 하게 표시된 수치가 좋은 수치를 의미한다. 물론 baseline model의 경우 one domain to one domain이 기본인 모델이라는 점을 감안하더라도 모든 경우에서 FUNIT이 좋았고 K를 20으로 설정한 경우 다른 모델의 결과보다 압도적으로 좋았다(K가 커질수록 결과도 보통 좋고 K가 1에서 5로 변할 때 가장 큰 성능적 도약이 보임). 특히 inception model을 통해 보여주는 두 결과(Top 류와 IS 류)는 해당 이미지가 얼마나 사실적으로 보이는가를 의미하는 아주 중요한 척도라고 생각된다. FUNIT보다 성능은 낮지만 MUNIT 또한 좋은 수치를 보여줌에 의미가 있어 보인다. 
 
 #### 질적 평가 
 
-![exp_qual](./../images/2019-08-24/exp_qual.png){: width="700" height="200"}{: .center-image}
+![exp_qual](./../images/2019-08-24/exp_qual.png){: width="400" height="130"}{: .center-image}
 
 AMT를 이용해 사용자 평가도 진행했는데 표의 수치는 animal face 데이터 셋과 bird 데이터 셋에 대해 K가 5인 FUNIT과 비교 모델 사이의 선택 비율이다(86이라면 100명 중 86명은 FUNIT이 좋다고 선택, 14명은 비교 모델이 좋다고 선택). Target 이미지와 더 비슷한 이미지를 선택해 달라는 것이 선택의 기준이다. 모든 경우 FUNIT이 압도적이다.
 
@@ -225,11 +225,11 @@ AMT를 이용해 사용자 평가도 진행했는데 표의 수치는 animal fac
 
 다음 그림은 다른 model들의 생성 이미지와 K를 5로 설정한 FUNIT의 생성 이미지 비교 이미지이다. 
 
-![vis_compa](./../images/2019-08-24/vis_compa.png){: width="700" height="300"}{: .center-image}
+![vis_compa](./../images/2019-08-24/vis_compa.png){: width="400" height="400"}{: .center-image}
 
 물론 FUNIT이 모두 완성적이진 않다. Target 이미지가 content 이미지와 (구조적으로) 너무 다를 경우 생성에 실패한다. 예를 들어 꽃과 강아지처럼(이런 건 사람도 힘들 듯..??)
 
-![fail_case](./../images/2019-08-24/fail_case.png){: width="700" height="300"}{: .center-image}
+![fail_case](./../images/2019-08-24/fail_case.png){: width="600" height="300"}{: .center-image}
 
 뿐만 아니라 다른 실험들(ablation study 등)이 appendix에 설명되어있고 참고할 부분은 추가로 찾아보면 좋을 듯하다. 
 
