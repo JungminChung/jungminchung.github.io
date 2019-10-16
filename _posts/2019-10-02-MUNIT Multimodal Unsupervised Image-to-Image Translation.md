@@ -97,7 +97,7 @@ $$
 
 ### 4.2 Latent reconstruction loss
 
-아래의 $q(s_2)$는 normal 분포를, $p($$\sdot$$)$는 입력 이미지의 분포를 의미한다. 
+아래의 $q(s_2)$는 normal 분포를, $p(﹒)$는 입력 이미지의 분포를 의미한다. 
 
 $$
 L_{recon}^{c_1}=\mathbb{E}_{c_1 \sim p(c_1), s_2 \sim q(s_2)}[\|E_2^C(G_2(c_1,s_2))-c_1\|_1]
@@ -107,7 +107,7 @@ $$
 L_{recon}^{s_2}=\mathbb{E}_{c_1 \sim p(c_1), s_2 \sim q(s_2)}[\|E_2^S(G_2(c_1,s_2))-s_2\|_1]
 $$
 
-이들은 encode vector와 style vector가 이미지를 생성하는 과정에서 무시되지 않고 이들을 이용해 이미지를 만들어내기를 강요하는 함수이다. 두 번째 수식은 style-augmented cycle consistency의 이름으로 multi modality를 가능하게 하는 cycle loss이다. 학습이 안정적으로 optimal point에 들어가면 style code의 분포가 normal 분포를 따른다고 한다. 그래서 ($p($$\sdot$$)$를 사용하지 않고) $q($$\sdot$$)$를 사용한 듯.
+이들은 encode vector와 style vector가 이미지를 생성하는 과정에서 무시되지 않고 이들을 이용해 이미지를 만들어내기를 강요하는 함수이다. 두 번째 수식은 style-augmented cycle consistency의 이름으로 multi modality를 가능하게 하는 cycle loss이다. 학습이 안정적으로 optimal point에 들어가면 style code의 분포가 normal 분포를 따른다고 한다. 그래서 ($p(﹒)$를 사용하지 않고) $q(﹒)$를 사용한 듯.
 
 물론 학습이 안정화된다고 content가 정말 순수하게 content의 의미만을 style이 style의 의미만을 갖는지는 보장할 수 없을 듯하다. 
 
