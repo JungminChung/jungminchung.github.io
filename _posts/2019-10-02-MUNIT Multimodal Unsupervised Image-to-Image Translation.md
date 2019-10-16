@@ -7,7 +7,7 @@ disqus: true
 use_math: true
 ---
 
-가장 기본적인 GAN은 단순히 noise에서 이미지(혹은 다른 도메인의 무엇)를 생성하는 생성 모델이다. 하지만 이것의 응용 분야는 super resolution, colorization, in-painting style transfer 등 다양하다. 그중 MUNIT은 특정 도메인의 이미지의 특성을 파악하고 이를 다른 도메인에 입히는 image to image translation 분야의 가장 기본이 되는 논문이다. 모델의 컨셉이 좋고 그 결과가 좋아서 지금까지도 해당 분야의 최신 논문에도 베이스 모델로 사용되곤 한다. NVIDIA에서 나온 논문이고 개인적으로 이 분야에 큰 흥미를 느끼게 해준 논문이다. 
+가장 기본적인 GAN은 단순히 noise에서 이미지(혹은 다른 도메인의 무엇)를 생성하는 생성 모델이다. 하지만 이것의 응용 분야는 super resolution, colorization, in-painting style, transfer 등 다양하다. 그중 MUNIT은 특정 도메인의 이미지의 특성을 파악하고 이를 다른 도메인에 입히는 image to image translation 분야의 가장 기본이 되는 논문이다. 모델의 컨셉이 좋고 그 결과가 좋아서 지금까지도 해당 분야의 최신 논문에도 베이스 모델로 사용되곤 한다. NVIDIA에서 나온 논문이고 개인적으로 이 분야에 큰 흥미를 느끼게 해준 논문이다. 
 
 ## 1. Introduction 
 
