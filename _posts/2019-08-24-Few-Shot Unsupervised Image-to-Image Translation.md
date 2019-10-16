@@ -108,7 +108,7 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
 
 ![discriminator](./../images/2019-08-24/discriminator.png){: width="350" height="280"}{: .center-image}
 
-위 그림은 논문에 나와있는 discriminator 아키텍처 체인을 그려보았다. 네트워크의 출력은 크기가 S인 vector이며 S는 source class의 총개수이다. 도메인(class)의 수가 다수이므로 이를 대응하기 위한 구조로 보인다. 마치 classification task와 같아 보여서 그런지 논문에서도 multiple adversarial classification task라고 설명한다. 각 unit은 0 혹은 1의 값을 갖는 binary value로 1은 'source class의 이미지다!' 0은 '생성 이미지다!'라는 의미를 갖는다. Discriminator를 update 하는 rule은 아래와 같이 일반적 방법을 따른다.
+위 그림은 논문에 나와있는 discriminator 아키텍처 체인을 그린 것이다. 네트워크의 출력은 크기가 S인 vector이며 S는 source class의 총개수이다. 도메인(class)의 수가 다수이므로 이를 대응하기 위한 구조로 보인다. 마치 classification task와 같아 보여서 그런지 논문에서도 multiple adversarial classification task라고 설명한다. 각 unit은 0 혹은 1의 값을 갖는 binary value로 1은 'source class의 이미지다!' 0은 '생성 이미지다!'라는 의미를 갖는다. Discriminator를 update 하는 rule은 아래와 같이 일반적 방법을 따른다.
 
 - Update D 
     - Input이 real 이미지인 경우 (from source class)
