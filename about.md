@@ -19,4 +19,5 @@ Image to Image Translation에 깊은 관심이 있습니다. :)
 ### Contact me
 
 [mmismin00@google.com](mailto:mmismin00@google.com)
+
 [jungminchung@airi.kr](mailto:jungminchung@airi.kr)
