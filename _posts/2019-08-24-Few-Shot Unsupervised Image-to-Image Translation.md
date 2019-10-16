@@ -60,7 +60,7 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
 
 학습이 진행되는 상황에서 생성자가 여러 도메인의 데이터에 접하고, 접하는 이미지도 많지 않다. 즉 **적은 수의 데이터로 '일반적'으로 이런 특성을 뽑고 기억해야 한다**는 것을 학습시키는 것으로 보인다. 
 
-## 4. FUNIT Architecture 
+## 3. FUNIT Architecture 
 
 * 목적 : 몇 개(few shot)의 Target class의 이미지만을 이용해 입력 이미지와 출력 이미지 사이의 mapping을 가능하게 함 
 * 입력 : Source class의 이미지 
@@ -72,7 +72,7 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
     - Source class가 각각 하나의 도메인이므로 단순 discriminator를 사용하지 못하고 multi-task discriminator를 도입함
     - NO PAIRED : 다른 class의 사진 속 어떤 객체도 같은 포즈는 없음 
 
-### 4-1. Few-shot Image Translator ($G$)
+### 3-1. Few-shot Image Translator ($G$)
 
 ![generator](./../images/2019-08-24/generator.png){: width="600" height="360"}{: .center-image}
 
@@ -99,7 +99,7 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
         - test 일 때 : 1개, 5개, 10개, 15개, 20개 
     - Source class가 많을수록 더 좋은 few shot translation 성능을 보임 
 
-### 4-2. Multi-task adversarial discriminator 
+### 3-2. Multi-task adversarial discriminator 
 
 * 목적 : 생성된 이미지가 실제 이미지와 비슷하게 생성되게 하는 것 
 * 입력 : 생성 이미지($\bar{x}$) 혹은 object class의 class 이미지($y$) 
@@ -122,13 +122,13 @@ Test 과정은 class encoder를 통해 K 개 만큼의 이미지를 받아들인
 
 하지만 multi-task이므로 다음의 조건이 추가로 붙는다: <u>선택된 source class가 아닌 유닛은 0이 나오든 1이 나오든 update에 영향을 주지 않는다</u>. 예를 들어, 5번째 class의 이미지를 이용해 네트워크를 학습시킬 때, 8번째 2번째 등 5번째가 아닌 class는 0이 나오든 1이 나오든 상관없다. 논문에서 penalize라는 단어를 사용했는데 그냥 loss의 back-prop을 이용한 update라고 봐도 무방할 듯하다(loss function이 penalty 일 순 있지만 penalty라고 모두 loss function을 의미하는 건 아님). 특별히 어떤 다른 penalty를 적용했다고 명시되어있진 않다. 
 
-## 5. Loss function 
+## 4. Loss function 
 
 $$
 \min_D \max_G L_{GAN}(D,G) + \lambda_R L_R (G) + \lambda_F L_F(G)
 $$
 
-### 5-1. GAN loss 
+### 4-1. GAN loss 
 
 $$
 L_{GAN}(G,D)=E_x[-\log{D^{c_x}(x)}]+E_{x,\{y_1,...,y_K\}}[\log{(1-D^{c_y}(\bar{x}))}]
@@ -141,7 +141,7 @@ Multi-task adversarial loss로 기본적인 D loss와는 수식이 약간 다르
     - Vanilla GAN의 adv loss를 이용하는 경우 보통 $\log{D(﹒)}$의 입력과 $1-\log{D(﹒)}$의 입력이 비슷해지기를 희망한다. 하지만 이 경우 전자의 입력은 content 이미지 후자의 입력은 생성 이미지로 이 둘이 비슷하기를 바라진 않는다(오히려 object 이미지와 비슷해지기를 희망함). 
     - 또한 $D$의 목표는 각 class에 해당하는 binary value가 0과 1로 적절히 잘 나오는 것이므로 통상적인 adv loss의 의미보다는 classification 문제의 loss와 같은 의미를 갖는다. 따라서 각 항이 모두 값이 작아지길 바라고 그런 의미에서 마이너스가 붙은 것으로 보인다. 
 
-### 5-2. Recontruction Loss 
+### 4-2. Recontruction Loss 
 
 $$
 L_R(G)=E_x[\|x-G(x,\{x\})\|_1^1]
@@ -149,7 +149,7 @@ $$
 
 **content 이미지와 object class의 class 이미지가 같은 경우에 사용**한다. 이미지를 똑같이 reconstuction 할 수 있도록 한다.
 
-### 5-3. Feature matching loss 
+### 4-3. Feature matching loss 
 
 $$
 L_F(G)=E_{x,\{y_1,...,y_K\}}[\|D_f(\bar{x})-\sum\limits_{k} \frac{D_f(y_k)}{K}\|_1^1]
@@ -157,9 +157,9 @@ $$
 
 이 loss를 적용하기 위해 feature를 뽑아내는 변형 네트워크($D_f$)를 만들었다. Discriminator의 마지막 layer를 제거함으로써 만들었다고 한다. 생성된 이미지($\bar{x}$)와 class 이미지($\{y_1,...,y_K\}$)가 비슷하기를 희망하기 때문에 네트워크의 중간 feature map을 이용한 L1 loss를 이용한다. 
 
-## 6. Experiments 
+## 5. Experiments 
 
-### 6-1. Baseline Model 
+### 5-1. Baseline Model 
 
 Target class가 학습에 포함할지, 포함하지 않을지에 따라 baseline model을 분류하였다. 논문에서 포함하지 않는 경우를 Fair, 포함하는 경우를 unfair이라고 표시하였다. 
 
@@ -174,7 +174,7 @@ Target class가 학습에 포함할지, 포함하지 않을지에 따라 baselin
 
 모든 baseline model은 '본래 이름'-'Fair/Unfair'-'K'의 방식으로 논문에서 표현되어있다. 
 
-### 6-2. Dataset
+### 5-2. Dataset
 
 총 4개의 데이터 셋을 확보해서 실험을 진행하였고 데이터셋 이름 / 전체 이미지 수 / source class의 갯수 / target class의 갯수 로 표시하였다.
 
@@ -183,7 +183,7 @@ Target class가 학습에 포함할지, 포함하지 않을지에 따라 baselin
 3. Flowers / 8189 / 85 / 17 
 4. Food / 31395 / 224 / 32 
 
-### 6-3. 평가 Metrics
+### 5-3. 평가 Metrics
 
 - Translation Accuracy 
     - 생성 이미지가 target class에 속하는지를 알아보기 위함 
@@ -203,7 +203,7 @@ Target class가 학습에 포함할지, 포함하지 않을지에 따라 baselin
     - Frechet Inception Distance(FID) 사용 
     - 모드 target class의 이미지들과 생성 이미지의 1:1 쌍을 바탕으로 FID 값을 구한 뒤 그 값들을 평균함으로 구함(mFID)
 
-### 6-4. Result 
+### 5-4. Result 
 
 아래 그림은 FUNIT을 K를 5로 설정한 FUNIT의 결과 이미지 중 animal face이다. $y_1$과 $y_2$는 target 이미지의 일부이고, K가 5이므로 저러한 이미지가 3개씩 더 있을 것이다. $x$는 content 이미지고 마지막 $\bar{x}$가 생성된 이미지이다. content 이미지의 구도를 바탕으로 $y_1$과 $y_2$의 스타일적 특성을 반영해 생성하였다. 생성된 모델임에도 디테일과 사실성이 그럴듯하다. 양적, 질적 평가를 아래 적어두었다. 
 
@@ -233,6 +233,6 @@ AMT를 이용해 사용자 평가도 진행했는데 표의 수치는 animal fac
 
 뿐만 아니라 다른 실험들(ablation study 등)이 appendix에 설명되어있고 참고할 부분은 추가로 찾아보면 좋을 듯하다. 
 
-## 7. Conclusion
+## 6. Conclusion
 
 외관이 너무 다르지 않은 unseen 이미지 도메인으로 I2I translation을 가능하게 만든 논문이다. 따라서 학습 과정에서 보지 못하는 데이터에 대비하는 구조와 데이터 세팅이 있었고 그것을 '일반화'라는 관점으로 잘 풀어서 설명했다. (몇 안 되지만, 내가 봤었던) Few-shot 논문들은 데이터가 작아서 잘 안되지만 그래도 조금 된다!를 강조했던 반면 FUNIT은 결과 이미지가 너무 이쁘다. 
