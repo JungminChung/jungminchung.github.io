@@ -25,7 +25,7 @@ Unpaired 데이터에 대해 multi modal 결과물을 생성할 수 있는 many 
 
 ## 2. Basic Idea 
 
-![assum](./../images/2019-10-02/assum.png){: width="400" height="130"}{: .center-image}
+![assum](./../images/2019-10-02/assum.png){: width="650" height="200"}{: .center-image}
 
 #### 가정 (*partially shared latent space assumption*)
 - 이미지는 <u>content와 style이라는 latent space</u>로 나뉠 수 있음 
@@ -45,7 +45,7 @@ $x_1$ = $G_1(c, s_1)$, $x_2$ = $G_2(c, s_2)$
 
 #### 각 과정의 흐름 
 
-![overview](./../images/2019-10-02/overview.png){: width="400" height="130"}{: .center-image}
+![overview](./../images/2019-10-02/overview.png){: width="650" height="300"}{: .center-image}
 
 학습 시 : 위 그림의 좌(a)에 해당하며 각 도메인의 이미지를 content와 style로 나눈다. 이후 이것을 다시 원본 이미지로 reconstruct 시킨다. 이 과정에서 **encoder는 이미지를 구조적인 정보를 담고 있는 content와 색감 정보를 담고 있는 style로 잘 나누는 능력**을 갖게 된다. 또한 **decoder는 content와 style 정보를 바탕으로 그럴듯한 이미지를 생성해내는 능력**을 갖게 된다. 
 
@@ -65,7 +65,7 @@ $x_1$ = $G_1(c, s_1)$, $x_2$ = $G_2(c, s_2)$
     * 학습 시 : 각 도메인의 reconstruction 이미지
     * 인퍼런스 시 : 원 도메인의 content에 상대 도메인의 style(들)을 입힌 translation 이미지 
 * 구성 network 
-    ![network](./../images/2019-10-02/network.png){: width="400" height="130"}{: .center-image}
+    ![network](./../images/2019-10-02/network.png){: width="550" height="180"}{: .center-image}
     1. Encoder ($E_i$)
         - Content Encoder($E_i^C$)와 Style Encoder($E_i^S$)로 이루어지며 각각은 입력 이미지를 content와 style로 나눔
     2. Decoder ($G_i$)
@@ -97,7 +97,7 @@ $$
 
 ### 4.2 Latent reconstruction loss
 
-아래의 $q(s_2)$는 normal 분포를, $p(\sdot)$는 입력 이미지의 분포를 의미한다. 
+아래의 $q(s_2)$는 normal 분포를, $p($$\sdot$$)$는 입력 이미지의 분포를 의미한다. 
 
 $$
 L_{recon}^{c_1}=\mathbb{E}_{c_1 \sim p(c_1), s_2 \sim q(s_2)}[\|E_2^C(G_2(c_1,s_2))-c_1\|_1]
@@ -107,7 +107,7 @@ $$
 L_{recon}^{s_2}=\mathbb{E}_{c_1 \sim p(c_1), s_2 \sim q(s_2)}[\|E_2^S(G_2(c_1,s_2))-s_2\|_1]
 $$
 
-이들은 encode vector와 style vector가 이미지를 생성하는 과정에서 무시되지 않고 이들을 이용해 이미지를 만들어내기를 강요하는 함수이다. 두 번째 수식은 style-augmented cycle consistency의 이름으로 multi modality를 가능하게 하는 cycle loss이다. 학습이 안정적으로 optimal point에 들어가면 style code의 분포가 normal 분포를 따른다고 한다. 그래서 ($p(\sdot)$를 사용하지 않고) $q(\sdot)$를 사용한 듯.
+이들은 encode vector와 style vector가 이미지를 생성하는 과정에서 무시되지 않고 이들을 이용해 이미지를 만들어내기를 강요하는 함수이다. 두 번째 수식은 style-augmented cycle consistency의 이름으로 multi modality를 가능하게 하는 cycle loss이다. 학습이 안정적으로 optimal point에 들어가면 style code의 분포가 normal 분포를 따른다고 한다. 그래서 ($p($$\sdot$$)$를 사용하지 않고) $q($$\sdot$$)$를 사용한 듯.
 
 물론 학습이 안정화된다고 content가 정말 순수하게 content의 의미만을 style이 style의 의미만을 갖는지는 보장할 수 없을 듯하다. 
 
@@ -162,7 +162,7 @@ $$
 
 #### Table 1  
 
-![tabel1](./../images/2019-10-02/table1.png){: width="400" height="130"}{: .center-image}
+![tabel1](./../images/2019-10-02/table1.png){: width="500" height="250"}{: .center-image}
 
 * 축 설명 
     * Quality : User study를 통해 얻었다. 비교 모델과 MUNIT을 비교했을 때 MUNIT의 비교 우위 비율이다. 예를 들어 10% 라면 90%는 MUNIT이 좋다, 10%는 비교 모델이 좋다는 의미이다. 높을수록 좋다. 
@@ -174,7 +174,7 @@ Ablation study의 결과를 살펴보면 $L_{recon}^s$가 없는 경우 Quality�
 
 #### Table 2 
 
-![tabel2](./../images/2019-10-02/table2.png){: width="400" height="130"}{: .center-image}
+![tabel2](./../images/2019-10-02/table2.png){: width="500" height="220"}{: .center-image}
 
 이 테이블은 animal dataset으로 평가한 결과이다. 비교 모델들의 score를 살펴보면 IS가 작지 않지만 CIS가 낮다. 이는 전체 이미지는 다양하며 어느 정도의 이미지 quality는 보장지만 하나의 이미지에 대해 생성되는 여러 이미지들의 diversity가 적다는 의미로 받아들일 수 있다. 그에 비해 MUNIT은 두 score가 모두 높다. (심지어 IS 조차 높음)
 
@@ -183,17 +183,17 @@ Ablation study의 결과를 살펴보면 $L_{recon}^s$가 없는 경우 Quality�
 
 MUNIT을 이용해 생성한 이미지들이며 양질의 mulit modal 이미지를 볼 수 있다. 위에서부터 edge2shoe and edge2handback, animal dataset, street dataset, yosemite dataset이다. 
 
-![D_sNh](./../images/2019-10-02/D_sNh.png){: width="400" height="130"}{: .center-image}
+![D_sNh](./../images/2019-10-02/D_sNh.png){: width="400" height="160"}{: .center-image}
 
-![D_ani](./../images/2019-10-02/D_ani.png){: width="400" height="130"}{: .center-image}
+![D_ani](./../images/2019-10-02/D_ani.png){: width="400" height="200"}{: .center-image}
 
-![D_street](./../images/2019-10-02/D_street.png){: width="400" height="130"}{: .center-image}
+![D_street](./../images/2019-10-02/D_street.png){: width="400" height="350"}{: .center-image}
 
-![D_yose](./../images/2019-10-02/D_yose.png){: width="400" height="130"}{: .center-image}
+![D_yose](./../images/2019-10-02/D_yose.png){: width="400" height="200"}{: .center-image}
 
 다음으로 다른 이미지로부터 style을 뽑아 기준 이미지에 입히는 결과 이미지이다. 
 
-![Translate](./../images/2019-10-02/Translate.png){: width="400" height="130"}{: .center-image}
+![Translate](./../images/2019-10-02/Translate.png){: width="400" height="220"}{: .center-image}
 
 ## 6. Conclusion
 
